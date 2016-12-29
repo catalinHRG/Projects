@@ -38,7 +38,7 @@ public class Population {
           ArrayList<Individual> individuals; // each individual has a chromosom , fitness , likelyhood to be selected in the next generation I.E. probability
           ArtificialNeuron aN1;
           
-          int CROSS_OVER_CONSTANT; // used to decide at which bit the cut will be made in order to do the crossover
+          int CROSS_OVER_CONSTANT = 5; // used to decide at which bit the cut will be made in order to do the crossover
           
           int randomMaxRange;
           static int PARTITION_CONSTANT = 3 ; // used to devide the 12 bit chromozom into 3 4bit sublists , each sublists used to obtain one of the weight vector components
@@ -508,7 +508,7 @@ public class Population {
 
           public static void main(String[] args) {
 
-                    Population population = new Population(50 , 20 , 10, 1000 , 10);
+                    Population population = new Population(50 , 500 , 10, 1000 , 8);
                     population.triggerEvolution(); // LABORATOR 8
                     
                     //Population p2 = new Population(10 , 5, 12 , 980 , 12); // param #1 - number of individuals , param #2 mutation rate , param #3 chromozom size , param #4 max fitness I.E. stopping condition
