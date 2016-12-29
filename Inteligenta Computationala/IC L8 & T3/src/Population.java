@@ -40,6 +40,7 @@ public class Population {
           
           int CROSS_OVER_CONSTANT; // used to decide at which bit the cut will be made in order to do the crossover
           
+          int randomMaxRange;
           static int PARTITION_CONSTANT = 3 ; // used to devide the 12 bit chromozom into 3 4bit sublists , each sublists used to obtain one of the weight vector components
           static int NR_OF_INDIVIDUALS ;
           static double MAX_FITNESS ; // used as a stoping condition for the GA
@@ -50,11 +51,12 @@ public class Population {
           boolean foundTheOne = false; // flag to stop the loop when atleast one individual has the desired fitness
           
 
-          public Population(int numberOfIndividuals , int mutationRate, int chromozomSize , double maxFitness) {
+          public Population(int numberOfIndividuals , int mutationRate, int chromozomSize , double maxFitness , int randomRange) {
                     
                     NR_OF_INDIVIDUALS = numberOfIndividuals;
                     MUTATION_RATE = mutationRate;
                     MAX_FITNESS  = maxFitness ;
+                    randomMaxRange = randomRange;
                     
                     individuals = new ArrayList();
 
@@ -231,7 +233,7 @@ public class Population {
 
                     for (int i = 0; i < currentGeneration.size(); i++) {
 
-                              if (currentGeneration.get(i).fitness > MAX_FITNESS) {
+                              if (currentGeneration.get(i).fitness >= MAX_FITNESS) {
 
                                         temp = i;
                                         foundTheOne = true;
@@ -318,7 +320,7 @@ public class Population {
           ArrayList<Integer> firstCrossOver(ArrayList<Integer> c1, ArrayList<Integer> c2) { // cel mai probabil va trebui instantiat un arraylist cu lista obtinuta ca parametru
                     
                     Random rand = new Random();
-                    CROSS_OVER_CONSTANT =  rand.nextInt(12);
+                    CROSS_OVER_CONSTANT =  rand.nextInt(randomMaxRange);
                     
                     ArrayList<Integer> firstHalf = new ArrayList(c1.subList(0, CROSS_OVER_CONSTANT));
                     ArrayList<Integer> secondHalf = new ArrayList(c2.subList(CROSS_OVER_CONSTANT, c2.size()));
@@ -330,7 +332,7 @@ public class Population {
           ArrayList<Integer> secondCrossOver(ArrayList<Integer> c1, ArrayList<Integer> c2) {
                     
                     Random rand = new Random();
-                    CROSS_OVER_CONSTANT =  rand.nextInt(12);
+                    CROSS_OVER_CONSTANT =  rand.nextInt(randomMaxRange);
                     
                     ArrayList<Integer> firstHalf = new ArrayList(c2.subList(0, CROSS_OVER_CONSTANT));
                     ArrayList<Integer> secondHalf = new ArrayList(c1.subList(CROSS_OVER_CONSTANT, c2.size()));
@@ -506,11 +508,11 @@ public class Population {
 
           public static void main(String[] args) {
 
-                    //Population population = new Population(50 , 200 , 10, 1000);
-                    //population.triggerEvolution(); // LABORATOR 8
+                    Population population = new Population(50 , 20 , 10, 1000 , 10);
+                    population.triggerEvolution(); // LABORATOR 8
                     
-                    Population p2 = new Population(10 , 5, 12 , 980); // param #1 - number of individuals , param #2 mutation rate , param #3 chromozom size , param #4 max fitness I.E. stopping condition
-                    p2.trainNeuronViaGA(); // TEMA 3
+                    //Population p2 = new Population(10 , 5, 12 , 980 , 12); // param #1 - number of individuals , param #2 mutation rate , param #3 chromozom size , param #4 max fitness I.E. stopping condition
+                    //p2.trainNeuronViaGA(); // TEMA 3
                     
           }
 
