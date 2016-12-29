@@ -45,7 +45,7 @@ public class Population {
           static int NR_OF_INDIVIDUALS ;
           static double MAX_FITNESS ; // used as a stoping condition for the GA
           static int MUTATION_RATE ; // given a range of 0 - 1000 , you pick a number in that range to dictate what will the mutation rate be -- 
-                                                          // EXAMPLE : for MUTATION_RATE = 500 , there is a 0.5 % chance per bit for a mutation to occur -- I.E. 500 / 1000 = 0.5 %
+                                                          // EXAMPLE : for MUTATION_RATE = 500 , there is a 50 % chance per bit for a mutation to occur -- I.E. 500 / 1000 = 0.5 %
           
           int numberOfGenerations = 1; 
           boolean foundTheOne = false; // flag to stop the loop when atleast one individual has the desired fitness
@@ -508,7 +508,7 @@ public class Population {
 
           public static void main(String[] args) {
 
-                    Population population = new Population(50 , 500 , 10, 1000 , 8);
+                    Population population = new Population(50 , 200 , 10, 1000 , 8);
                     population.triggerEvolution(); // LABORATOR 8
                     
                     //Population p2 = new Population(10 , 5, 12 , 980 , 12); // param #1 - number of individuals , param #2 mutation rate , param #3 chromozom size , param #4 max fitness I.E. stopping condition
