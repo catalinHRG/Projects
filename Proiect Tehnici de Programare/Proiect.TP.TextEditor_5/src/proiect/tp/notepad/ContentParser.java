@@ -59,10 +59,7 @@ public class ContentParser {
                     threads = new ArrayList();
 
                     threads.add(new CustomThread(splitContent.get(0), 0)); // first threads will not need to add the lenght of the previous chunk size to the indeces found for occurrence index relevance in the main content string
-                    int a = 0;
-                    for (int i = 0 ; i < splitContent.size() ; i++){
-                              a += splitContent.get(i).length();
-                    }
+                    
                     
                     int cumulativeSize = 0 ;
                     
