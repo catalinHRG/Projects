@@ -394,6 +394,7 @@ public class Voyager extends JFrame {
                               public void actionPerformed(ActionEvent ae) {
                                         
                                         String tblName = tableName.getText();
+                                        
                                         try {
                                                   
                                                   connectivityManager.establishDBConnection();
