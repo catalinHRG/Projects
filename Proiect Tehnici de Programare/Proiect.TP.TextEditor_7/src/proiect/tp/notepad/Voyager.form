@@ -82,6 +82,39 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="getTableContentTriggerActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="getEntryTrigger">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Get Entry"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="getEntryTriggerActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="insertTableTrigger">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Insert Table"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertTableTriggerActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="insertEntryTrigger">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Insert Entry"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertEntryTriggerActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Menu class="javax.swing.JMenuBar" name="mainMenuBar">

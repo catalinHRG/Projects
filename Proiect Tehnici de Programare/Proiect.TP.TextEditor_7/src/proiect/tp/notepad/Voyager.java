@@ -5,30 +5,18 @@
  */
 package proiect.tp.notepad;
 
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
@@ -37,6 +25,7 @@ import javax.swing.text.BadLocationException;
  *
  * @author Catalin H
  */
+
 public class Voyager extends JFrame {
 
           public static ClosableTabbedPane copyOfTabContainer;
@@ -157,6 +146,9 @@ public class Voyager extends JFrame {
                     shortcutToolBar = new javax.swing.JToolBar();
                     connectionTriggerButton = new javax.swing.JButton();
                     getTableContentTrigger = new javax.swing.JButton();
+                    getEntryTrigger = new javax.swing.JButton();
+                    insertTableTrigger = new javax.swing.JButton();
+                    insertEntryTrigger = new javax.swing.JButton();
                     mainMenuBar = new javax.swing.JMenuBar();
                     fileMenu = new javax.swing.JMenu();
                     newFileMenuItem = new javax.swing.JMenuItem();
@@ -209,6 +201,39 @@ public class Voyager extends JFrame {
                               }
                     });
                     shortcutToolBar.add(getTableContentTrigger);
+
+                    getEntryTrigger.setText("Get Entry");
+                    getEntryTrigger.setFocusable(false);
+                    getEntryTrigger.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                    getEntryTrigger.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                    getEntryTrigger.addActionListener(new java.awt.event.ActionListener() {
+                              public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                        getEntryTriggerActionPerformed(evt);
+                              }
+                    });
+                    shortcutToolBar.add(getEntryTrigger);
+
+                    insertTableTrigger.setText("Insert Table");
+                    insertTableTrigger.setFocusable(false);
+                    insertTableTrigger.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                    insertTableTrigger.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                    insertTableTrigger.addActionListener(new java.awt.event.ActionListener() {
+                              public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                        insertTableTriggerActionPerformed(evt);
+                              }
+                    });
+                    shortcutToolBar.add(insertTableTrigger);
+
+                    insertEntryTrigger.setText("Insert Entry");
+                    insertEntryTrigger.setFocusable(false);
+                    insertEntryTrigger.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                    insertEntryTrigger.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                    insertEntryTrigger.addActionListener(new java.awt.event.ActionListener() {
+                              public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                        insertEntryTriggerActionPerformed(evt);
+                              }
+                    });
+                    shortcutToolBar.add(insertEntryTrigger);
 
                     topContainer.getContentPane().add(shortcutToolBar, java.awt.BorderLayout.CENTER);
 
@@ -367,57 +392,74 @@ public class Voyager extends JFrame {
                     ConectivityDialogBox cdb = new ConectivityDialogBox();
                     this.connectivityManager = cdb.getConnectivityManager(); // now we have the connectivityManager object and we can use the connectivity object stored inside
                     // to execute any query we want , and to even close the connection when we need to
+                    System.out.println("Tocmai am stabilit conexiunea la BD ");
 
           }//GEN-LAST:event_connectionTriggerButtonActionPerformed
 
           private void getTableContentTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getTableContentTriggerActionPerformed
 
-                    JDialog prompt = new JDialog();
+                    String tableName = "actor"; // de facut prompt pentru user , pentru a baga numele tabelului
+                    DataBaseManager dbm = new DataBaseManager(new _FetchTableStrategy(tableName));
+                    try {
 
-                    prompt.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-                    prompt.setSize(300, 150);
-                    final Toolkit toolkit = Toolkit.getDefaultToolkit();
-                    final Dimension screenSize = toolkit.getScreenSize();
-                    final int x = (screenSize.width - prompt.getWidth()) / 2;
-                    final int y = (screenSize.height - prompt.getHeight()) / 2;
-                    prompt.setLocation(x, y);
-                    
-                    prompt.setLayout(new FlowLayout());
+                              connectivityManager.establishDBConnection();
+                              System.out.println(dbm.execute_FetchQuery(connectivityManager.getConnection()));
 
-                    JTextField tableName = new JTextField(5);
-                    JLabel nameLabel = new JLabel("Table name : ");
+                    } catch (SQLException | ClassNotFoundException ex) {
+                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
-                    JButton okButton = new JButton("OK!");
-                    okButton.addActionListener(new ActionListener() {
-
-                              @Override
-                              public void actionPerformed(ActionEvent ae) {
-                                        
-                                        String tblName = tableName.getText();
-                                        
-                                        try {
-                                                  
-                                                  connectivityManager.establishDBConnection();
-                                                  DataBaseManager dbm = new DataBaseManager(connectivityManager.getConnection());
-                                                  JScrollPane scrollConainer = new JScrollPane(new CustomTextArea(dbm.getAllTableContent(tblName)));
-                                                  tabContainer.addTab(tblName, scrollConainer);
-
-                                                  prompt.dispose();
-
-                                        } catch (SQLException | ClassNotFoundException ex) {
-                                                  Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-                              }
-
-                    });
-
-                    prompt.add(nameLabel);
-                    prompt.add(tableName);
-                    prompt.add(okButton);
-                    prompt.setVisible(true);
 
           }//GEN-LAST:event_getTableContentTriggerActionPerformed
 
+          private void getEntryTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getEntryTriggerActionPerformed
+
+                    String tableName = "actor"; // de facut prompt pentru user pentru a baga numele tabelului si al catelea entry vrea sa vada
+                    DataBaseManager dbm = new DataBaseManager(new _FetchEntryStrategy(tableName, 3));
+
+                    try {
+                              connectivityManager.establishDBConnection();
+                              System.out.println(dbm.execute_FetchQuery(connectivityManager.getConnection()));
+
+                    } catch (ClassNotFoundException | SQLException ex) {
+                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+
+          }//GEN-LAST:event_getEntryTriggerActionPerformed
+
+          private void insertEntryTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertEntryTriggerActionPerformed
+
+                    DataBaseManager dbm = new DataBaseManager (new _InsertEntryStrategy("actor" , 25 , "Catalin" , "Herghelegiu" , 25)) ; 
+                    
+                    try {
+                              
+                              connectivityManager.establishDBConnection();
+                              dbm.execute_InsertQuery(connectivityManager.getConnection());
+                              
+                    } catch (ClassNotFoundException | SQLException ex) {
+                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+          }//GEN-LAST:event_insertEntryTriggerActionPerformed
+
+          private void insertTableTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertTableTriggerActionPerformed
+
+                    DataBaseManager dbm = new DataBaseManager(new _InsertTableStrategy("Elev", "ID", "Nume", "Prenume", "Varsta"));
+                    
+                    try {
+                              
+                              connectivityManager.establishDBConnection();
+                              dbm.execute_InsertQuery(connectivityManager.getConnection());
+                              
+                    } catch (ClassNotFoundException | SQLException ex) {
+                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+          }//GEN-LAST:event_insertTableTriggerActionPerformed
+
+          
+          
           public static void main(String args[]) {
                     /* Set the Nimbus look and feel */
                     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -462,7 +504,10 @@ public class Voyager extends JFrame {
           private javax.swing.JMenuItem cutMenuItem;
           private javax.swing.JMenu editMenu;
           private javax.swing.JMenu fileMenu;
+          private javax.swing.JButton getEntryTrigger;
           private javax.swing.JButton getTableContentTrigger;
+          private javax.swing.JButton insertEntryTrigger;
+          private javax.swing.JButton insertTableTrigger;
           private javax.swing.JScrollPane jScrollPane1;
           private javax.swing.JTextField jTextField1;
           private javax.swing.JPanel mainContainerCenter;

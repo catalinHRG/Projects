@@ -15,36 +15,39 @@ import java.sql.Statement;
  *
  * @author Catalin H
  */
-public class DataBaseManager {
-
-          private final Connection connectionToDB;
-
-          public DataBaseManager(Connection connectionToDB) {
-
-                    this.connectionToDB = connectionToDB;
+public class _FetchEntryStrategy  implements _FetchDataStrategy{
+          
+          final String tableName ;
+          final int entryID ;
+          
+          public _FetchEntryStrategy (String tableName , int entryID) {
+                    
+                    this.tableName = tableName;
+                    this.entryID = entryID ;
           }
-
-          public String getAllTableContent(String tableName) throws SQLException {
-
+          
+          @Override
+          public String fetchData(Connection dbConnection) throws SQLException {
+                    
                     StringBuilder temp = new StringBuilder();
-                    Statement statement = connectionToDB.createStatement();
-                    ResultSet resultSet = statement.executeQuery("select * from " + tableName);
+                    Statement statement = dbConnection.createStatement();
+                    ResultSet resultSet = statement.executeQuery("Select * From " + tableName + " Limit " + (entryID - 1) + " , 1");
                     ResultSetMetaData rsmd = resultSet.getMetaData();
                     int columnsCount = rsmd.getColumnCount();
 
                     while (resultSet.next()) {
-                              
-                              for (int i = 1; i <= columnsCount; i++) { 
-                                        
+
+                              for (int i = 1; i <= columnsCount; i++) {
+
                                         temp.append(resultSet.getObject(i));
                                         temp.append(" ");
-                                        
+
                               }
-                              
-                              temp.append ("\n");
+
+                              temp.append("\n");
                     }
 
                     return temp.toString();
           }
-
+          
 }
