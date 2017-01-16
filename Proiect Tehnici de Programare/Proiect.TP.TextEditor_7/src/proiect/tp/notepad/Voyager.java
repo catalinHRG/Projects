@@ -324,6 +324,11 @@ public class Voyager extends JFrame {
                     pack();
           }// </editor-fold>//GEN-END:initComponents
 
+          
+          
+          
+          // triggerele pentru butoane
+          
           private void newProjectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newProjectMenuItemActionPerformed
                     // TODO add your handling code here:
           }//GEN-LAST:event_newProjectMenuItemActionPerformed
@@ -396,14 +401,20 @@ public class Voyager extends JFrame {
 
           }//GEN-LAST:event_connectionTriggerButtonActionPerformed
 
+          
+          // Strategy Pattern implementation 
+          
           private void getTableContentTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getTableContentTriggerActionPerformed
 
                     String tableName = "actor"; // de facut prompt pentru user , pentru a baga numele tabelului
+                    
                     DataBaseManager dbm = new DataBaseManager(new _FetchTableStrategy(tableName));
                     try {
 
                               connectivityManager.establishDBConnection();
-                              System.out.println(dbm.execute_FetchQuery(connectivityManager.getConnection()));
+                              JScrollPane scrollContainer = new JScrollPane (new CustomTextArea (dbm.execute_FetchQuery(connectivityManager.getConnection())));
+                              tabContainer.addTab(tableName , scrollContainer);
+                              tabContainer.setSelectedComponent(scrollContainer);
 
                     } catch (SQLException | ClassNotFoundException ex) {
                               Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
@@ -420,7 +431,7 @@ public class Voyager extends JFrame {
                     try {
                               connectivityManager.establishDBConnection();
                               System.out.println(dbm.execute_FetchQuery(connectivityManager.getConnection()));
-
+                              
                     } catch (ClassNotFoundException | SQLException ex) {
                               Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -429,7 +440,9 @@ public class Voyager extends JFrame {
           }//GEN-LAST:event_getEntryTriggerActionPerformed
 
           private void insertEntryTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertEntryTriggerActionPerformed
-
+                    
+                    // de facut prompt pentru input
+                    
                     DataBaseManager dbm = new DataBaseManager (new _InsertEntryStrategy("actor" , 25 , "Catalin" , "Herghelegiu" , 25)) ; 
                     
                     try {
@@ -444,7 +457,10 @@ public class Voyager extends JFrame {
           }//GEN-LAST:event_insertEntryTriggerActionPerformed
 
           private void insertTableTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertTableTriggerActionPerformed
-
+                    
+                    
+                    // de facut prompt pentru user
+                    
                     DataBaseManager dbm = new DataBaseManager(new _InsertTableStrategy("Elev", "ID", "Nume", "Prenume", "Varsta"));
                     
                     try {
