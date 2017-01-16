@@ -30,17 +30,19 @@ public class _FetchTableStrategy implements _FetchDataStrategy{
           public String fetchData(Connection dbConnection) throws SQLException{
                     
                     StringBuilder temp = new StringBuilder();
-                    Statement statement = dbConnection.createStatement();
+                    
+                    Statement statement = dbConnection.createStatement(); 
                     ResultSet resultSet = statement.executeQuery("Select * From " + tableName);
                     ResultSetMetaData rsmd = resultSet.getMetaData();
                     int columnsCount = rsmd.getColumnCount();
-
+                    
+                    
                     while (resultSet.next()) {
 
                               for (int i = 1; i <= columnsCount; i++) {
-
+                                        
                                         temp.append(resultSet.getObject(i));
-                                        temp.append(" ");
+                                        temp.append("   ");
 
                               }
 

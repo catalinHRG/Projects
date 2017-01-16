@@ -5,18 +5,30 @@
  */
 package proiect.tp.notepad;
 
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ActionEvent;
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
@@ -25,7 +37,6 @@ import javax.swing.text.BadLocationException;
  *
  * @author Catalin H
  */
-
 public class Voyager extends JFrame {
 
           public static ClosableTabbedPane copyOfTabContainer;
@@ -44,30 +55,11 @@ public class Voyager extends JFrame {
                               this.addCaretListener(new CaretListener() {
                                         @Override
                                         public void caretUpdate(CaretEvent ce) {
-
-                                                  JTextArea newEditor = (JTextArea) ce.getSource();
-
-                                                  int lineNo;
-                                                  int columnNo;
-
-                                                  try {
-
-                                                            int caretpos = newEditor.getCaretPosition();
-
-                                                            lineNo = newEditor.getLineOfOffset(caretpos);
-
-                                                            columnNo = caretpos - newEditor.getLineStartOffset(lineNo);
-
-                                                            lineNo += 1;
-
-                                                            statusDisplayBar.setText("Line : " + lineNo + " Column : " + columnNo);
-
-                                                  } catch (BadLocationException ex) {
-                                                            Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
-                                                  }
+                                                  caretUpdateMethod(ce);
                                         }
 
-                              });
+                              }
+                              );
 
                     }
 
@@ -78,27 +70,7 @@ public class Voyager extends JFrame {
                               this.addCaretListener(new CaretListener() {
                                         @Override
                                         public void caretUpdate(CaretEvent ce) {
-
-                                                  JTextArea newEditor = (JTextArea) ce.getSource();
-
-                                                  int lineNo;
-                                                  int columnNo;
-
-                                                  try {
-
-                                                            int caretpos = newEditor.getCaretPosition();
-
-                                                            lineNo = newEditor.getLineOfOffset(caretpos);
-
-                                                            columnNo = caretpos - newEditor.getLineStartOffset(lineNo);
-
-                                                            lineNo += 1;
-
-                                                            statusDisplayBar.setText("Line : " + lineNo + " Column : " + columnNo);
-
-                                                  } catch (BadLocationException ex) {
-                                                            Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
-                                                  }
+                                                  caretUpdateMethod(ce);
                                         }
 
                               });
@@ -127,6 +99,30 @@ public class Voyager extends JFrame {
                               DropData data = new DropData();
                               data.dataTransfer(dtde);
                               this.append(data.fileContent);
+                    }
+
+                    private void caretUpdateMethod(CaretEvent ce) {
+
+                              JTextArea newEditor = (JTextArea) ce.getSource();
+
+                              int lineNo;
+                              int columnNo;
+
+                              try {
+
+                                        int caretpos = newEditor.getCaretPosition();
+
+                                        lineNo = newEditor.getLineOfOffset(caretpos);
+
+                                        columnNo = caretpos - newEditor.getLineStartOffset(lineNo);
+
+                                        lineNo += 1;
+
+                                        statusDisplayBar.setText("Line : " + lineNo + " Column : " + columnNo);
+                                        
+                              } catch (BadLocationException ex) {
+                                        Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+                              }
                     }
 
           }
@@ -324,11 +320,8 @@ public class Voyager extends JFrame {
                     pack();
           }// </editor-fold>//GEN-END:initComponents
 
-          
-          
-          
           // triggerele pentru butoane
-          
+
           private void newProjectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newProjectMenuItemActionPerformed
                     // TODO add your handling code here:
           }//GEN-LAST:event_newProjectMenuItemActionPerformed
@@ -397,59 +390,149 @@ public class Voyager extends JFrame {
                     ConectivityDialogBox cdb = new ConectivityDialogBox();
                     this.connectivityManager = cdb.getConnectivityManager(); // now we have the connectivityManager object and we can use the connectivity object stored inside
                     // to execute any query we want , and to even close the connection when we need to
-                    System.out.println("Tocmai am stabilit conexiunea la BD ");
+//
+//                    try {
+//                              connectivityManager.establishDBConnection();
+//
+//                    } catch (ClassNotFoundException | SQLException ex) {
+//                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//
+//                    ArrayList<String> tableNames = new ArrayList();
+//
+//                    String query = "SELECT * FROM sys.Tables ; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES "
+//                            + "WHERE TABLE_TYPE = `BASE TABLE` AND TABLE_SCHEMA=`sakila` ; " ;           // e ceva in neregula cu query ul !?!!!
+//
+//                    
+//
+//                    try {
+//
+//                              Statement statement = connectivityManager.getConnection().createStatement();
+//
+//                              ResultSet resultSet = statement.executeQuery(query);
+//                              ResultSetMetaData rsmd = resultSet.getMetaData();
+//                              int columnsCount = rsmd.getColumnCount();
+//
+//                              while (resultSet.next()) {
+//
+//                                        tableNames.add(resultSet.getString("TABLE_NAME"));
+//
+//                              }
+//
+//                    } catch (SQLException ex) {
+//                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//
+//                    System.out.println(tableNames); // de listat in JTree cand se stabileste conexiunea
 
           }//GEN-LAST:event_connectionTriggerButtonActionPerformed
 
-          
           // Strategy Pattern implementation 
-          
+
           private void getTableContentTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getTableContentTriggerActionPerformed
 
-                    String tableName = "actor"; // de facut prompt pentru user , pentru a baga numele tabelului
-                    
-                    DataBaseManager dbm = new DataBaseManager(new _FetchTableStrategy(tableName));
-                    try {
+                    final int textFieldSize = 15;
 
-                              connectivityManager.establishDBConnection();
-                              JScrollPane scrollContainer = new JScrollPane (new CustomTextArea (dbm.execute_FetchQuery(connectivityManager.getConnection())));
-                              tabContainer.addTab(tableName , scrollContainer);
-                              tabContainer.setSelectedComponent(scrollContainer);
+                    _Prompt prompt = new _Prompt(tabContainer, 4, 3);
+                    prompt.setLayout(new FlowLayout());
 
-                    } catch (SQLException | ClassNotFoundException ex) {
-                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    JLabel promptLabel = new JLabel("Enter the name of the table : ");
+                    JTextField tableName = new JTextField(textFieldSize);
+                    JButton okButton = new JButton("OK!");
+
+                    prompt.add(promptLabel);
+                    prompt.add(tableName);
+
+                    okButton.addActionListener(new java.awt.event.ActionListener() {
+
+                              @Override
+                              public void actionPerformed(ActionEvent ae) {
+
+                                        DataBaseManager dbm = new DataBaseManager(new _FetchTableStrategy(tableName.getText()));
+                                        try {
+
+                                                  connectivityManager.establishDBConnection();
+
+                                                  JScrollPane scrollContainer = new JScrollPane(new CustomTextArea(dbm.execute_FetchQuery(connectivityManager.getConnection())));
+                                                  tabContainer.addTab(tableName.getText(), scrollContainer);
+                                                  tabContainer.setSelectedComponent(scrollContainer);
+
+                                                  connectivityManager.closeDBConnection();
+                                                  prompt.dispose();
+
+                                        } catch (SQLException | ClassNotFoundException ex) {
+                                                  Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                              }
+
+                    });
+
+                    prompt.add(okButton);
+                    prompt.setVisible(true);
 
 
           }//GEN-LAST:event_getTableContentTriggerActionPerformed
 
           private void getEntryTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getEntryTriggerActionPerformed
 
-                    String tableName = "actor"; // de facut prompt pentru user pentru a baga numele tabelului si al catelea entry vrea sa vada
-                    DataBaseManager dbm = new DataBaseManager(new _FetchEntryStrategy(tableName, 3));
+                    final int tableNameFieldSize = 7;
+                    final int entryIDFieldSize = 7;
 
-                    try {
-                              connectivityManager.establishDBConnection();
-                              System.out.println(dbm.execute_FetchQuery(connectivityManager.getConnection()));
-                              
-                    } catch (ClassNotFoundException | SQLException ex) {
-                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    _Prompt prompt = new _Prompt(tabContainer, 4, 3);
+                    prompt.setLayout(new FlowLayout());
 
+                    JLabel promptLabel = new JLabel("Enter the name of the table : ");
+                    JTextField tableName = new JTextField(tableNameFieldSize);
+                    JTextField entryID = new JTextField(entryIDFieldSize);
+                    JButton okButton = new JButton("OK!");
+
+                    prompt.add(promptLabel);
+                    prompt.add(tableName);
+                    prompt.add(entryID);
+
+                    okButton.addActionListener(new java.awt.event.ActionListener() {
+
+                              @Override
+                              public void actionPerformed(ActionEvent ae) {
+
+                                        DataBaseManager dbm = new DataBaseManager(new _FetchEntryStrategy(tableName.getText(), Integer.parseInt(entryID.getText())));
+
+                                        try {
+
+                                                  connectivityManager.establishDBConnection();
+
+                                                  CustomTextArea prop = new CustomTextArea(dbm.execute_FetchQuery(connectivityManager.getConnection()));
+                                                  _Prompt popUp = new _Prompt(tabContainer, 4, 3);
+                                                  popUp.setLayout(new FlowLayout());
+
+                                                  popUp.add(prop);
+                                                  popUp.setVisible(true);
+                                                  prompt.dispose();
+
+                                                  connectivityManager.closeDBConnection();
+
+                                        } catch (ClassNotFoundException | SQLException ex) {
+                                                  Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                              }
+
+                    });
+
+                    prompt.add(okButton);
+                    prompt.setVisible(true);
 
           }//GEN-LAST:event_getEntryTriggerActionPerformed
 
           private void insertEntryTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertEntryTriggerActionPerformed
-                    
-                    // de facut prompt pentru input
-                    
-                    DataBaseManager dbm = new DataBaseManager (new _InsertEntryStrategy("actor" , 25 , "Catalin" , "Herghelegiu" , 25)) ; 
-                    
+
+                    // Nu gasesc un query cu care sa pot insera cum trebuie .........................
+                    DataBaseManager dbm = new DataBaseManager(new _InsertEntryStrategy("actor", 1, "Catalin", "Herghelegiu", 25));
+
                     try {
-                              
+
                               connectivityManager.establishDBConnection();
                               dbm.execute_InsertQuery(connectivityManager.getConnection());
-                              
+
                     } catch (ClassNotFoundException | SQLException ex) {
                               Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -457,25 +540,86 @@ public class Voyager extends JFrame {
           }//GEN-LAST:event_insertEntryTriggerActionPerformed
 
           private void insertTableTriggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertTableTriggerActionPerformed
-                    
-                    
-                    // de facut prompt pentru user
-                    
-                    DataBaseManager dbm = new DataBaseManager(new _InsertTableStrategy("Elev", "ID", "Nume", "Prenume", "Varsta"));
-                    
-                    try {
-                              
-                              connectivityManager.establishDBConnection();
-                              dbm.execute_InsertQuery(connectivityManager.getConnection());
-                              
-                    } catch (ClassNotFoundException | SQLException ex) {
-                              Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
-                    }
 
+                    final int fieldSize = 15;
+
+                    _Prompt prompt = new _Prompt(tabContainer, 2, 2);
+                    prompt.setLayout(new GridBagLayout());
+
+                    JLabel tableNameLabel = new JLabel("Table name : ");
+                    JLabel firstColumnLabel = new JLabel("Column 1 : ");
+                    JLabel secondColumnLabel = new JLabel("Column 2 : ");
+                    JLabel thirdColumnLabel = new JLabel("Column 3 : ");
+                    JLabel fourthColumnLabel = new JLabel("Column 4 : ");
+
+                    JTextField tableNameField = new JTextField(fieldSize);
+                    JTextField firstColumnName = new JTextField(fieldSize);
+                    JTextField secondColumnName = new JTextField(fieldSize);
+                    JTextField thirdColumnName = new JTextField(fieldSize);
+                    JTextField fourthColumnName = new JTextField(fieldSize);
+
+                    JButton okButton = new JButton("OK!");
+
+                    okButton.addActionListener(new java.awt.event.ActionListener() {
+                              @Override
+                              public void actionPerformed(ActionEvent ae) {
+
+                                        DataBaseManager dbm = new DataBaseManager(new _InsertTableStrategy(tableNameField.getText(), firstColumnName.getText(), secondColumnName.getText(), thirdColumnName.getText(), fourthColumnName.getText()));
+
+                                        try {
+
+                                                  connectivityManager.establishDBConnection();
+                                                  dbm.execute_InsertQuery(connectivityManager.getConnection());
+                                                  prompt.dispose();
+
+                                        } catch (ClassNotFoundException | SQLException ex) {
+                                                  Logger.getLogger(Voyager.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                              }
+                    });
+
+                    GridBagConstraints gc = new GridBagConstraints();
+
+                    gc.gridx = 0;
+                    gc.gridy = 0;
+                    gc.anchor = GridBagConstraints.LINE_START;
+                    prompt.add(tableNameLabel, gc);
+
+                    gc.gridy = 1;
+                    prompt.add(firstColumnLabel, gc);
+
+                    gc.gridy = 2;
+                    prompt.add(secondColumnLabel, gc);
+
+                    gc.gridy = 3;
+                    prompt.add(thirdColumnLabel, gc);
+
+                    gc.gridy = 4;
+                    prompt.add(fourthColumnLabel, gc);
+
+                    gc.gridx = 1;
+                    gc.gridy = 0;
+                    //gc.anchor = GridBagConstraints.LINE_END;
+                    prompt.add(tableNameField, gc);
+
+                    gc.gridy = 1;
+                    prompt.add(firstColumnName, gc);
+
+                    gc.gridy = 2;
+                    prompt.add(secondColumnName, gc);
+
+                    gc.gridy = 3;
+                    prompt.add(thirdColumnName, gc);
+
+                    gc.gridy = 4;
+                    prompt.add(fourthColumnName, gc);
+
+                    gc.gridy = 5;
+                    prompt.add(okButton, gc);
+
+                    prompt.setVisible(true);
           }//GEN-LAST:event_insertTableTriggerActionPerformed
 
-          
-          
           public static void main(String args[]) {
                     /* Set the Nimbus look and feel */
                     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

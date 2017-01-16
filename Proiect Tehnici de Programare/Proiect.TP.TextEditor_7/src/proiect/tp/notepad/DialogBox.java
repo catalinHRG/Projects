@@ -20,9 +20,14 @@ import javax.swing.JTextField;
  */
 public class DialogBox extends JDialog{
           
+          final int tabNameFieldSize = 5;
+          
           JButton okButton = new JButton("Ok");
-          JTextField tabNameField = new JTextField(5);
+          JTextField tabNameField = new JTextField(tabNameFieldSize);
           JLabel promptLabel = new JLabel("Enter the name for the file ... ");
+          
+          final int widthAdjust = 4;
+          final int heightAdjut = 3;
           
           public void close(){
                     
@@ -31,9 +36,9 @@ public class DialogBox extends JDialog{
           
           public DialogBox(ClosableTabbedPane tabContainer){
                     
-                    this.setSize(tabContainer.getSize().width / 4, tabContainer.getSize().height / 4);
-                    this.setLocation(tabContainer.getLocationOnScreen().x + tabContainer.getWidth() / 3,
-                            tabContainer.getLocationOnScreen().y + tabContainer.getHeight() / 3);
+                    this.setSize(tabContainer.getSize().width / widthAdjust, tabContainer.getSize().height / widthAdjust);
+                    this.setLocation(tabContainer.getLocationOnScreen().x + tabContainer.getWidth() / heightAdjut,
+                            tabContainer.getLocationOnScreen().y + tabContainer.getHeight() / heightAdjut);
                     this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                     
                     this.setLayout(new GridBagLayout());
