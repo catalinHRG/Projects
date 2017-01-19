@@ -253,13 +253,13 @@ public class NeuralNet {
                     }
           }
 
-          void loadPattern(String rowElements, int patternSize) {
+          void loadPattern(String rowElements, int _PaternSize) {
 
                     String[] pattern = rowElements.split(",");
 
                     ArrayList<Double> temp = new ArrayList();
 
-                    for (int i = 0; i < patternSize; i++) {
+                    for (int i = 0; i < _PaternSize; i++) {
 
                               temp.add(Double.parseDouble(pattern[i])); // converting the pattern elements into an integer array
                     }
@@ -321,9 +321,9 @@ public class NeuralNet {
                     /* fisierul .txt arata in felul urmator : 
                     
                               ** pe fiecare rand , ai atat elementele vectorului pattern cat si elementele vectorului iesirilor asteptate , despartite de virgula
-                              ** programul stie sa citeasca pattern ul si iesirile dorite asociate , trebuie doar mentionat in constructor cate elemente are pattern ul
+                              ** programul stie sa citeasca pattern ul si iesirile dorite respective , trebuie doar mentionat in constructor cate elemente are pattern ul
                               
-                                        !! setul de ponderi va fi generat de program in functie de cati neuron pe layer ul ascuns are reteaua ( primul parametru din constructor ) 
+                                        !! setul de ponderi va fi generat de program in functie de cati neuroni pe layer ul ascuns are reteaua ( primul parametru din constructor ) 
                     
                     */
                     
