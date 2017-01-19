@@ -40,7 +40,7 @@ public class NeuralNet {
                     this.Nr_Of_ArtificialNeurons = Nr_Of_ArtificialNeurons;
                     this.learningRate = learningRate;
                     this.patternSize = patternSize;
-                    this.maxError = errorMargin * Nr_Of_ArtificialNeurons * (patternSize++);
+                    this.maxError = errorMargin * Nr_Of_ArtificialNeurons ;
                     this.filePath = filePath;
 
           }
