@@ -1,0 +1,93 @@
+Node bucket = head;
+		
+		while(bucket.next != null){
+			
+			if(bucket.data == reference){
+				
+				Node newNode = new Node(data);
+				newNode.next = bucket.next;
+				bucket.next = newNode;
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		while(bucket != null){
+			
+			if(bucket.data == reference){
+				
+				if(bucket.equals(tail)){
+					
+					System.out.println("Am ajuns la sfarsitul listei , nu exista element pentru a fi eliminat");
+					return;
+					
+				}else if(bucket.equals(tail.previous)){
+				
+					bucket.next = null;
+					tail = bucket;
+					size++;
+					return;
+					
+				}else{
+					
+					bucket.next = bucket.next.next;
+					bucket.next.previous = bucket;
+				}
+			}
+			
+			bucket = bucket.next;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+				while(bucket != null){
+			
+			if(bucket.data == info){
+				
+				if(bucket.equals(tail)){
+					
+					addLast(info);
+					size++;
+					return;
+					
+				}else{
+					
+					Node newLink = new Node(info, bucket.next, bucket);
+					bucket.next = newLink;
+					size++;
+					return;
+				}
+				
+			}
+
+			bucket = bucket.next;
+		}
+		
+		sysout
