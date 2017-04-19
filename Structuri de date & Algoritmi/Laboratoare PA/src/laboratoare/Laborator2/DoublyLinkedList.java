@@ -2,28 +2,6 @@ package laboratoare.Laborator2;
 
 class DoublyLinkedList {
 
-	private class Node {
-
-		int data;
-		Node next;
-		Node previous;
-
-		Node(int data, Node next, Node previous) {
-
-			this.data = data;
-			this.next = next;
-			this.previous = previous;
-
-		}
-
-		void printData() {
-
-			System.out.println(data);
-		}
-	}
-
-	// -----------------------
-
 	Node head;
 	Node tail;
 	int size = 0;
@@ -64,100 +42,69 @@ class DoublyLinkedList {
 			size++;
 		}
 	}
-	
-	void addAfter(int info, int reference){
-		
+
+	void addAfter(int info, int reference) {
+
 		Node bucket = head;
-		
-		while(bucket != null){
-			
-			if(bucket.data == reference){
-				
-				if(bucket.equals(tail)){
-					
+
+		while (bucket != null) {
+
+			if (bucket.data == reference) {
+
+				if (bucket.equals(tail)) {
+
 					addLast(info);
 					size++;
 					return;
-					
-				}else{
-					
+
+				} else {
+
 					Node newLink = new Node(info, bucket.next, bucket);
 					bucket.next = newLink;
 					size++;
 					return;
 				}
-				
+
 			}
 
 			bucket = bucket.next;
 		}
-		
+
 		System.out.println("Elementul specificat nu a fost gasit in lista , nu s a realizat inserarea ! ");
 	}
-	
-	void removeAfter(int reference){
-		
+
+	void removeAfter(int reference) {
+
 		Node bucket = head;
-		
-		while(bucket != null){
-			
-			if(bucket.data == reference){
-				
-				if(bucket.equals(tail)){
-					
+
+		while (bucket != null) {
+
+			if (bucket.data == reference) {
+
+				if (bucket.equals(tail)) {
+
 					System.out.println("Am ajuns la sfarsitul listei , nu exista element pentru a fi eliminat");
 					return;
-					
-				}else if(bucket.equals(tail.previous)){
-				
+
+				} else if (bucket.equals(tail.previous)) {
+
 					bucket.next = null;
 					tail = bucket;
 					size++;
 					return;
-					
-				}else{
-					
+
+				} else {
+
 					bucket.next = bucket.next.next;
 					bucket.next.previous = bucket;
 					size++;
 					return;
 				}
 			}
-			
-			bucket = bucket.next;
-		}
-		
-	}
-	
-	void printForward() {
 
-		Node bucket = head;
-
-		System.out.println("Print de la cap la coada : ");
-
-		while (bucket != null) {
-
-			bucket.printData();
 			bucket = bucket.next;
 		}
 
-		System.out.println("-------------------------------");
-	}
-
-	void printBackwards() {
-
-		Node bucket = tail;
-
-		System.out.println("Print de la coada la cap : ");
-
-		while (bucket != null) {
-
-			bucket.printData();
-			bucket = bucket.previous;
-
-		}
-
-		System.out.println("-------------------------------");
 	}
 
 	void removeElement(int candidate) {
@@ -174,21 +121,21 @@ class DoublyLinkedList {
 			if (bucket.data == candidate) {
 
 				if (bucket.equals(head)) {
-					
+
 					bucket.next.previous = null;
 					head = bucket.next;
 					size--;
 					return;
 
 				} else if (bucket.equals(tail)) {
-					
+
 					bucket.previous.next = null;
 					tail = bucket.previous;
 					size--;
 					return;
 
 				} else {
-					
+
 					bucket.previous.next = bucket.next;
 					bucket.next.previous = bucket.previous;
 					size--;
@@ -206,7 +153,7 @@ class DoublyLinkedList {
 	void removeLastElement() {
 
 		if (tail == null) {
-			
+
 			System.out.println("Lista goala");
 			return;
 		}
@@ -222,12 +169,56 @@ class DoublyLinkedList {
 		head.next.previous = null;
 		head = head.next;
 		size--;
-				
+
 	}
 
 	void printListSize() {
 
 		System.out.println("Marimea liste : " + size);
+	}
+
+	public void makeUnion(DoublyLinkedList param){
+		
+		this.tail.next = param.head;
+	}
+	
+	public String toString(String mode) {
+
+		if (mode == "Forward") {
+
+			StringBuffer sb = new StringBuffer();
+			Node bucket = head;
+
+			while (bucket != null) {
+
+				sb.append(bucket.data);
+				sb.append(" ");
+				bucket = bucket.next;
+
+			}
+
+			return sb.toString();
+
+		} else if (mode == "Backward") {
+
+			StringBuffer sb = new StringBuffer();
+			Node bucket = tail;
+
+			while (bucket != null) {
+
+				sb.append(bucket.data);
+				sb.append(" ");
+				bucket = bucket.previous;
+
+			}
+
+			return sb.toString();
+
+		} else {
+
+			return null;
+		}
+
 	}
 
 }

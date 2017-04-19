@@ -309,9 +309,6 @@ public class L1 {
 		polynomialCoeficients.add(3.2);
 		
 		app.computePolynomial(polynomialCoeficients, 2.3);
-		
-		
-
 	}
 
 }
