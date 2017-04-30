@@ -2,23 +2,26 @@ package laboratoare.Laborator3.Graph_Components;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class Vertex {
+public class Vertex implements Comparable<Vertex>{
 
 	private List<Edge> neighbors;
 	private String label;
 	private int data;
 	private boolean visited, startingVertex;
-
+	private Random rng;
 	// ***********************************************
 
-	public Vertex(String label ,int data, boolean startingVertex) {
-
+	public Vertex(String label, boolean startingVertex) {
+		
+		rng = new Random();
+		neighbors = new ArrayList<Edge>();
+		
 		this.label = label;
 		this.startingVertex = startingVertex;
-		this.data = data;
+		this.data = rng.nextInt(200); // random starting value;
 		visited = false;
-		neighbors = new ArrayList<Edge>();
 	}
 
 	public String getLabel() {
@@ -49,6 +52,11 @@ public class Vertex {
 	public boolean isFirstVertex(){
 		
 		return startingVertex;
+	}
+
+	public void setdata(int data){
+		
+		this.data = data;
 	}
 	
 	public int getData(){
@@ -87,6 +95,11 @@ public class Vertex {
 		return neighbors.size();
 	}
 	
+	public Vertex getNeighbor(int index){
+		
+		return neighbors.get(index).getHead();
+	}
+	
 	public ArrayList<Edge> getNeighbors(){
 		
 		return (ArrayList<Edge>) neighbors;
@@ -114,6 +127,11 @@ public class Vertex {
 		Vertex castedReference = (Vertex)reference;
 		return label.equals(castedReference.label);
 		
+	}
+
+	public int compareTo(Vertex candidate) {
+		
+		return this.data - candidate.data;
 	}
 
 }

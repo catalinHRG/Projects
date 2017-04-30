@@ -1,0 +1,378 @@
+if (stack.isEmpty()) { 
+					
+					for(Edge neighbor : currentVertexNeighbors){
+						
+						currentVertex = neighbor.getHead();
+						if( !currentVertex.isVisited()){
+							
+							currentVertex.visitVertex();
+							stack.push(currentVertex);
+							break;
+						}
+					}
+
+				} else {
+
+					currentVertex = stack.pop();
+					System.out.println("Sunt la nodul " + currentVertex.getLabel());
+					currentVertexNeighbors = currentVertex.getNeighbors();
+
+					for (Edge neighbor : currentVertexNeighbors) {
+
+						currentVertex = neighbor.getHead();
+						if (!currentVertex.isVisited()) {
+
+							currentVertex.visitVertex();
+							stack.push(currentVertex);
+							break;
+
+						}
+					}
+
+				}
+
+			}
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		int counter;
+		
+		while(true){
+			
+			counter = 0;
+			isHeap = true;
+			
+			while(counter < table.size()){
+				
+				maxHeapify(table,counter);
+				counter++;	
+			}
+			
+			if(isHeap){ break; }
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		package laboratoare.Laborator4;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class HeapManager {
+
+	
+	public ArrayList<Integer> sortLists(ArrayList<ArrayList<Integer>> listOfLists){
+		
+		int indexPointer;
+		Tuple<Integer> tuple;
+		
+		ArrayList<Integer> sortedList = new ArrayList<Integer>();
+		List<Integer> table = new ArrayList<Integer>(); // this will be the heap we will use internally
+		
+		// populate heap with the first element of each of the lists
+		
+		for(ArrayList<Integer> list : listOfLists){ table.add(list.get(0)); }
+		makeMinHeap(table);
+		
+		
+		
+		return sortedList;
+		
+	}
+
+	
+	public Tuple<Integer> removeRoot(){
+		
+		
+		
+		for(int i = 0 ; i < )
+		
+	}
+	
+	public void insertElement(List<Integer> table, int key, boolean maxHeap){
+		
+		table.add(key);
+		
+		if(maxHeap){
+			
+			bubbleUp_MaxHeap(table, table.size() - 1);
+			
+		}else{
+			
+			bubbleUp_MinHeap(table, table.size() - 1);
+		}
+		
+	}
+	
+	public void deleteElement(List<Integer> table, int key, boolean maxHeap) {
+
+		int keyIndex = table.indexOf(key); // will return -1 if the element is not in the array
+
+		if (keyIndex >= 0 ) { 
+			
+			table.set(keyIndex, table.remove(table.size() - 1)); // returns the element and removes it from the array
+
+			if (maxHeap) {
+				siftDown_MaxHeap(table, keyIndex);
+			} else {
+				siftDown_MinHeap(table, keyIndex);
+			}
+			
+		}else{
+			
+			System.out.println("Elementul " + key + " nu se afla in heap!! ");
+		}
+
+	}
+
+	public void increaseKeyValue(List<Integer> table, int value, int keyIndex, boolean maxHeap) {
+
+		if (value > table.get(keyIndex)) {
+
+			table.set(keyIndex, value);
+
+			if (maxHeap) {
+
+				bubbleUp_MaxHeap(table, keyIndex);
+
+			} else {
+
+				siftDown_MinHeap(table, keyIndex);
+			}
+		}
+	}
+
+	public void makeMaxHeap(List<Integer> table) {
+
+		for (int i = table.size(); i >= 0; i--) {
+
+			siftDown_MaxHeap(table, i);
+		}
+	}
+
+	public void makeMinHeap(List<Integer> table) {
+
+		for (int i = table.size(); i >= 0; i--) {
+
+			siftDown_MinHeap(table, i);
+		}
+
+	}
+
+	public void swap(List<Integer> table, int firstElementIndex, int secondElementIndex) {
+
+		int temp = table.get(secondElementIndex);
+		table.set(secondElementIndex, table.get(firstElementIndex));
+		table.set(firstElementIndex, temp);
+	}
+
+	public void bubbleUp_MaxHeap(List<Integer> table, int startingIndex) {
+
+		int child, parrent;
+
+		child = startingIndex;
+
+		if (child % 2 == 0) {
+
+			parrent = child / 2 - 1;
+		} else {
+
+			parrent = child / 2;
+		}
+
+		if (child > 0 && table.get(parrent) < table.get(child)) {
+
+			swap(table, child, parrent);
+			bubbleUp_MaxHeap(table, parrent);
+		}
+	}
+
+	public void bubbleUp_MinHeap(List<Integer> table, int startingIndex) {
+
+		int child, parrent;
+
+		child = startingIndex;
+
+		if (child % 2 == 0) {
+
+			parrent = child / 2 - 1;
+		} else {
+
+			parrent = child / 2;
+		}
+
+		if (child > 0 && table.get(parrent) < table.get(child)) {
+
+			swap(table, child, parrent);
+			bubbleUp_MaxHeap(table, parrent);
+		}
+	}
+
+	public void siftDown_MaxHeap(List<Integer> table, int startingIndex) {
+
+		int largest, left, right;
+
+		largest = startingIndex;
+		left = largest * 2 + 1;
+		right = left + 1;
+
+		if (left < table.size() && table.get(left) > table.get(largest)) {
+
+			largest = left;
+		}
+
+		if (right < table.size() && table.get(right) > table.get(largest)) {
+
+			largest = right;
+		}
+
+		if (largest != startingIndex) {
+
+			swap(table, largest, startingIndex);
+			siftDown_MaxHeap(table, largest);
+		}
+	}
+
+	public void siftDown_MinHeap(List<Integer> table, int startingIndex) {
+
+		int smallest, left, right;
+
+		smallest = startingIndex;
+		left = 2 * smallest + 1;
+		right = left + 1;
+
+		if (left < table.size() && table.get(left) < table.get(smallest)) {
+
+			smallest = left;
+		}
+		if (right < table.size() && table.get(right) < table.get(smallest)) {
+
+			smallest = right;
+		}
+
+		if (smallest != startingIndex) {
+
+			swap(table, smallest, startingIndex);
+			siftDown_MinHeap(table, smallest);
+		}
+	}
+	
+	public boolean isHeapEmpty(List<Integer> table){
+		
+		return table.isEmpty();
+	}
+	
+	public void printHeap(List<Integer> heap) {
+
+		int left, right;
+
+		for (int i = 0; i < heap.size(); i++) {
+
+			left = i * 2 + 1;
+			right = left + 1;
+
+			if (left < heap.size() && right < heap.size()) {
+
+				System.out.println("     " + heap.get(i));
+				System.out.println("    /" + " " + "\\");
+				System.out.println("  " + heap.get(left) + "   " + heap.get(right));
+				System.out.println("----------------------------");
+			}
+
+		}
+	}
+
+}
+		

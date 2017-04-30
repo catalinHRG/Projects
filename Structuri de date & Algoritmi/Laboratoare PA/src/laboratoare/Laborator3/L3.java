@@ -4,7 +4,13 @@ import laboratoare.Laborator3.Graph_Implementation.DGraph;
 import laboratoare.Laborator3.Graph_Implementation.UGraph;
 
 public class L3 {
-
+	
+	/*
+	 * Graph/Tree implementation using Nodes/Pointers to Nodes
+	 * 
+	 * */
+	
+	
 	public static void main(String[] args) {
 		
 		System.out.println("********************* Graf orientat , depth first traversal *************************");
@@ -31,7 +37,7 @@ public class L3 {
 		// P2
 		//System.out.println("\nEste graful de mai sus semi conex ? " + directedGraph.isGraphSemiConnected());
 		
-		directedGraph.depthFirstTraversal();
+		//directedGraph.depthFirstTraversal();
 
 		System.out.println("********************* Graf neorientat , depth first traversal *************************");
 		
@@ -65,12 +71,10 @@ public class L3 {
 		tree.addEdge("3", "6", 1);
 		tree.addEdge("3", "7", 1);
 		
-		tree.depthFirstTraversal();
+		//tree.depthFirstTraversal();
 		
 		System.out.println("********************* Arbore neorientat , breadth first traversal *************************");
 		
-		tree.breadthFirstTraversal();
-		// P3
-		unDirectedGraph.findSubTree().breadthFirstTraversal();
+		//tree.breadthFirstTraversal();
 	}
 }
