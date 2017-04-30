@@ -179,10 +179,8 @@ public class HeapManager {
 		child = startingIndex;
 
 		if (child % 2 == 0) {
-
 			parrent = child / 2 - 1;
 		} else {
-
 			parrent = child / 2;
 		}
 
@@ -200,10 +198,8 @@ public class HeapManager {
 		child = startingIndex;
 
 		if (child % 2 == 0) {
-
 			parrent = child / 2 - 1;
 		} else {
-
 			parrent = child / 2;
 		}
 
