@@ -98,8 +98,8 @@ public class L4 {
 		
 		int numberOfLists, numberOfElementsPerList, rngBoundary, sortedListSize;
 		
-		numberOfLists = 20;
-		numberOfElementsPerList = 20;
+		numberOfLists = 5;
+		numberOfElementsPerList = 3;
 		sortedListSize = numberOfLists * numberOfElementsPerList;
 		rngBoundary = 50;
 		

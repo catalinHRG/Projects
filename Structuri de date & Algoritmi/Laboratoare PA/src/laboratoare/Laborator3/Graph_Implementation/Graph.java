@@ -47,6 +47,27 @@ public class Graph {
 		edges = new ArrayList<Edge>();
 	}
 	
+	public void setVertices(List<Vertex> vertices){
+		
+		this.vertices = vertices;
+	}
+	
+	public boolean hasVertices(Vertex... candidates){
+		
+		boolean result = false;
+		
+		for(Vertex candidate : candidates){
+			
+			if(vertices.contains(candidate)){
+				result = true;
+			}else{
+				result = false;
+			}
+		}
+		
+		return result;
+	}
+	
 	public void pushNextVertexOnStack(Stack<Vertex> aStack, ArrayList<Edge> neighbors){
 		
 		Vertex current;
@@ -248,6 +269,40 @@ public class Graph {
 		clearVisitedTraces();
 	}
 
+	public boolean isGraphConnected(){
+		
+		boolean b1, b2;
+
+		for (int i = 0; i < vertices.size(); i++) {
+
+			for (int j = 0; j < vertices.size(); j++) {
+
+				if (i != j) {
+
+					Vertex start = vertices.get(i);
+					Vertex destination = vertices.get(j);
+
+					System.out.print("Verific daca exista drum intre " + start.getLabel() + " si "
+							+ destination.getLabel() + " : ");
+
+					b1 = hasPath(start, destination);
+					b2 = hasPath(destination, start);
+
+					if (!b1 || !b2) {
+						
+						System.out.println("Graful nu este conex");
+						return false;
+					}
+
+				}
+			}
+		}
+
+		System.out.println("Graful este conex");
+		return true;
+
+	}
+	
 	public boolean isGraphSimplyConnected() {
 
 		/*
@@ -359,11 +414,9 @@ public class Graph {
 
 					if (!(b1 || b2)) {
 
-						System.out.print(false);
 						return false;
 					}
 
-					System.out.println(true);
 				}
 			}
 		}

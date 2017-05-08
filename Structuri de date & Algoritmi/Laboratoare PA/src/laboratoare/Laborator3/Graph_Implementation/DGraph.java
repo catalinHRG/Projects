@@ -18,4 +18,11 @@ public class DGraph extends Graph implements Graphable {
 			tailVertex.addNeighbor(headVertex, weight);
 	}
 
+	@Override
+	public UGraph kruskalMST(){
+		
+		// TODO
+		return null;
+	}
+
 }

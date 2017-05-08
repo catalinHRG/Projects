@@ -115,6 +115,7 @@ public class HeapManager {
 
 		if (keyIndex >= 0) {
 			
+			
 			if (keyIndex == table.size() - 1){ table.remove(keyIndex); } // I.E.  need to remove last element
 			else { table.set(keyIndex, table.remove(table.size() - 1)); } // I.E. everything else
 			
@@ -179,8 +180,10 @@ public class HeapManager {
 		child = startingIndex;
 
 		if (child % 2 == 0) {
+
 			parrent = child / 2 - 1;
 		} else {
+
 			parrent = child / 2;
 		}
 
@@ -198,8 +201,10 @@ public class HeapManager {
 		child = startingIndex;
 
 		if (child % 2 == 0) {
+
 			parrent = child / 2 - 1;
 		} else {
+
 			parrent = child / 2;
 		}
 
