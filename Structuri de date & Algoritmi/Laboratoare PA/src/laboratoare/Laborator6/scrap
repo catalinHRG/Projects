@@ -1,0 +1,70 @@
+static int nrOfVertices = 6;
+	
+	public static int findUnvisitedNearestNeighbor(int distances[], boolean visited[]){
+		
+		int min = Integer.MAX_VALUE;
+		int nearestNeighborIndex = -1;
+		
+		
+		for(int i = 0 ; i < nrOfVertices ; i ++){
+			
+			if( ! visited[i] && distances[i] < min){
+				
+				min = distances[i];
+				nearestNeighborIndex = i;
+			}
+			
+		}
+		
+		return nearestNeighborIndex;
+		
+		
+	}
+	
+	public static void shortestPath_Dijkstra(int graph[][], int source){
+		
+		int infinity = Integer.MAX_VALUE;
+		int pivot;
+		
+		int distances[] = new int[nrOfVertices];
+		int shortestPath[] = new int[nrOfVertices];
+		boolean visited[] = new boolean[nrOfVertices];
+		
+		for(int i = 0 ; i < nrOfVertices ; i ++){
+			
+			distances[i] = infinity;
+			visited[i] = false;
+		}
+		
+		distances[source] = 0;
+		
+		for(int c = 0 ; c < nrOfVertices ; c ++){
+			
+			pivot = findUnvisitedNearestNeighbor(distances, visited);
+			shortestPath[c] = pivot;
+			visited[pivot] = true;
+			
+			for(int vertex = 0 ; vertex < nrOfVertices ; vertex ++){
+				
+				if( ! visited[vertex] && graph[pivot][vertex] != 0 && distances[pivot] != infinity 
+						&& distances[pivot] + graph[pivot][vertex] < distances[vertex] ){
+					
+					distances[vertex] = distances[pivot] + graph[pivot][vertex];
+				}
+				
+			}
+			
+		}
+		
+		for(int i = 0 ; i < shortestPath.length ; i ++){
+			
+			System.out.println(shortestPath[i] + 1);
+		}
+		
+		for(int i = 0 ; i < nrOfVertices ; i ++){
+			
+			System.out.println("Destinatie : " + i + " --- Costul asociat cu drumul de la sursa la destinatie : " 
+					+ distances[i]);
+		}
+		
+	}
