@@ -68,3 +68,32 @@ static int nrOfVertices = 6;
 		}
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	g.setFont(new Font("Serif", Font.PLAIN, 50));
+		g.setColor(Color.WHITE);
+		
+		int shiftX = 0; 
+		int shiftY;
+		
+		for(int i = 0 ; i < paths.size() ; i ++){
+			
+			shiftX = shiftX + 100;
+			shiftY = 0;
+			
+			for(int j = 0 ; j < paths.get(i).size() ; j ++){
+				
+				g.drawString(paths.get(i).get(j), x + shiftX, y + shiftY);
+				shiftY = shiftY + 100;
+			}
+		}
+	

@@ -8,11 +8,11 @@ import javax.swing.JFrame;
 public class L6 {
 
 	private static int nrOfVertices = 6;
-	private static ArrayList<ArrayList<String>> paths = new ArrayList<ArrayList<String>>();
+	private static ArrayList<ArrayList<Integer>> shortestPaths = new ArrayList<ArrayList<Integer>>();
 	
-	static ArrayList<ArrayList<String>> getPaths(){
+	static ArrayList<ArrayList<Integer>> getShortestPaths(){
 		
-		return paths;
+		return shortestPaths;
 	}
 	
 	static int minDistance(int distances[], Boolean visited[]) {
@@ -31,7 +31,7 @@ public class L6 {
 		return minIndex;
 	}
 
-	static void printPath(int parent[], int j, ArrayList<String> tmp) {
+	static void printPath(int parent[], int j, ArrayList<Integer> tmp) {
 		
 		if (parent[j] == -1)
 			return;
@@ -39,26 +39,26 @@ public class L6 {
 		printPath(parent, parent[j], tmp);
 
 		System.out.print(" " + (j + 1));
-		tmp.add(Integer.toString(j + 1));
+		tmp.add(j + 1);
 	}
 
 	static void printSolution(int dist[], int parent[]) {
 		
 		int src = 1;
-		ArrayList<String> temp = null;
+		ArrayList<Integer> temp = null;
 		
 		System.out.println("Vertex\t  Distance\tPath");
 		
 		for (int i = 1; i < nrOfVertices; i ++) {
 			
-			temp = new ArrayList<String>();
+			temp = new ArrayList<Integer>();
 			
 			System.out.print("\n" + src + " -> " + (i + 1) + " \t   " + dist[i] + "\t\t" + src);
-			temp.add(Integer.toString(src));
+			temp.add(src);
 			
 			printPath(parent, i, temp);
 			
-			paths.add(temp);
+			shortestPaths.add(temp);
 		}
 		
 	}
@@ -107,10 +107,30 @@ public class L6 {
 		};
 
 		L6.dijkstra(graph, 0);
-		DijkstraGUI display = new DijkstraGUI(L6.getPaths(), 250, 250);
+		
+		ArrayList<ArrayList<Integer>> graphEdges = new ArrayList<ArrayList<Integer>>();
+		ArrayList<Integer> tmp;
+		
+		for(int i = 0 ; i < graph.length ; i ++){
+			
+			tmp = new ArrayList<Integer>();
+			
+			for(int j = 0 ; j < graph.length ; j ++){
+				
+				if(graph[i][j] != 0){
+					
+					tmp.add(i + 1);
+					tmp.add(j + 1);
+				}
+				
+			}
+			
+			graphEdges.add(tmp);
+		}
+		
+		DijkstraGUI display = new DijkstraGUI(L6.getShortestPaths(), graphEdges, nrOfVertices);
 		
 		JFrame mainFrame = new JFrame();
-		
 		mainFrame.add(display);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
